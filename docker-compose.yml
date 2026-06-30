@@ -1,0 +1,42 @@
+name: mongodb-mcp-server
+
+services:
+  mcp-server:
+    build:
+      context: ./mcp-server
+    image: mongodb-mcp-server:latest
+    container_name: mongodb-mcp-server
+    environment:
+      MCP_TRANSPORT: http
+      MCP_HOST: "0.0.0.0"
+      MCP_PORT: "8000"
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    networks:
+      - mcp-net
+
+  streamlit-app:
+    build:
+      context: ./streamlit-app
+    image: mongodb-mcp-streamlit:latest
+    container_name: mongodb-mcp-streamlit
+    environment:
+      MCP_SERVER_URL: http://mcp-server:8000
+      SETTINGS_FILE: /app/.mcp_settings.json
+    ports:
+      - "8501:8501"
+    depends_on:
+      - mcp-server
+    restart: unless-stopped
+    networks:
+      - mcp-net
+    volumes:
+      - streamlit-settings:/app
+
+networks:
+  mcp-net:
+    driver: bridge
+
+volumes:
+  streamlit-settings:
