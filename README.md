@@ -12,14 +12,14 @@ A fully containerized system consisting of:
 │                      docker-compose                         │
 │                                                             │
 │  ┌──────────────────┐         ┌──────────────────────────┐  │
-│  │   mcp-server     │◄────────│    streamlit-app          │  │
-│  │  :8000           │  HTTP   │    :8501                  │  │
-│  │                  │  /rpc   │                           │  │
-│  │  JSON-RPC over   │         │  AI (OpenAI / Anthropic)  │  │
-│  │  HTTP + SSE      │         │  ← tool-calling →         │  │
+│  │   mcp-server     │◄────────│    streamlit-app         │  │
+│  │  :8000           │  HTTP   │    :8501                 │  │
+│  │                  │  /rpc   │                          │  │
+│  │  JSON-RPC over   │         │  AI (OpenAI / Anthropic) │  │
+│  │  HTTP + SSE      │         │  ← tool-calling →        │  │
 │  └───────┬──────────┘         └──────────────────────────┘  │
-│          │                                                   │
-└──────────┼───────────────────────────────────────────────────┘
+│          │                                                  │
+└──────────┼──────────────────────────────────────────────────┘
            │ PyMongo
            ▼
    External MongoDB
